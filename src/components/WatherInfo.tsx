@@ -35,7 +35,7 @@ export const WatherInfo = ({
       city: courentCity?.name,
     });
   }, []);
-  console.log(courentCity);
+
   const { name, sys = {}, main = {}, wind = {}, weather = [] } = courentCity;
   const { sunrise, sunset }: any = sys;
   const { humidity, feels_like, temp, temp_max, temp_min }: any = main;
