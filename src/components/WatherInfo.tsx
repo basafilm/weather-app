@@ -8,7 +8,7 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import { CourentDataTime } from "./CourentDataTime";
+import { CourentDataTime } from "./CourentDateTime";
 import { CustomizeButton } from "./CustomizeButton";
 import { AddCity } from "./AddCity";
 import { WeatherContext } from "./Context/WeatherContext";
