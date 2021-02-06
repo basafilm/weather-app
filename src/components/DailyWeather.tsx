@@ -1,12 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 
 export const DailyWeather = ({ daily }: any) => {
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
   return (
     <>
-      <SafeAreaView style={styles.DailyContainer}>
-        {daily?.slice(1).map((item: any) => {
+      <View style={styles.DailyContainer}>
+        {daily?.map((item: any) => {
           const dateDays = days[new Date(item.dt * 1000).getDay()];
           return (
             <View key={item.dt} style={styles.dailyDataContainer}>
@@ -21,16 +30,16 @@ export const DailyWeather = ({ daily }: any) => {
               />
               <Text style={styles.daysName}>{dateDays}</Text>
               <Text style={styles.maxMinTemp}>
-                {`${item?.temp.max?.toFixed(0)}°`}/
-                {`${item?.temp.min?.toFixed(0)}°`}
+                {`${item?.temp.min?.toFixed(0)}°`}/
+                {`${item?.temp.max?.toFixed(0)}°`}
               </Text>
               <Text style={styles.weatherDescriptions}>
-                {item?.weather[0]?.main},{item?.weather[0]?.description}
+                {item?.weather[0]?.description}
               </Text>
             </View>
           );
         })}
-      </SafeAreaView>
+      </View>
     </>
   );
 };
@@ -38,8 +47,11 @@ export const DailyWeather = ({ daily }: any) => {
 const styles = StyleSheet.create({
   DailyContainer: {
     flex: 1,
-    width: "90%",
+    width: "100%",
     margin: "auto",
+    alignContent: "center",
+    backgroundColor: "rgb(220,179,135)",
+    padding: 15,
   },
   dailyDataContainer: {
     flex: 1,
@@ -48,16 +60,16 @@ const styles = StyleSheet.create({
   },
   weatherIcone: { flex: 1, maxWidth: "20%" },
   daysName: {
-    flex: 0.5,
+    flex: 1,
     fontStyle: "normal",
     fontSize: 16,
   },
   maxMinTemp: {
-    flex: 0.5,
+    flex: 1,
     fontStyle: "italic",
     fontWeight: "bold",
   },
   weatherDescriptions: {
-    flex: 1.5,
+    flex: 1,
   },
 });

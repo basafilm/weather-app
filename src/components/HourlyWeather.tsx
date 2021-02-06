@@ -5,12 +5,13 @@ import moment from "moment";
 export const HourlyWeather = ({ hourly }: any) => {
   return (
     <View style={styles.hourlyContainer}>
+      <Text style={styles.todayText}>Now</Text>
       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
-        {hourly?.slice(1).map((item: any) => {
+        {hourly?.map((item: any) => {
           const timezoneInMinutes = item.dt / 60;
           const currentTime = moment()
             .utcOffset(timezoneInMinutes)
-            .format("hh");
+            .format("HH");
           return (
             <View key={item.dt} style={styles.scrollContainer}>
               <Text style={styles.hourlyDataContainer}>{currentTime}</Text>
@@ -39,29 +40,38 @@ export const HourlyWeather = ({ hourly }: any) => {
 const styles = StyleSheet.create({
   hourlyContainer: {
     flex: 1,
-    padding: 5,
+    padding: 2,
+  },
+  todayText: {
+    color: "white",
+    fontWeight: "bold",
+    paddingLeft: 5,
   },
   scrollView: {
     flex: 1,
     overflow: "scroll",
   },
-  scrollContainer: { flex: 1, flexDirection: "column", paddingTop: 10 },
+  scrollContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
   hourlyDataContainer: {
+    flex: 1,
     fontSize: 20,
     fontWeight: "300",
-    paddingHorizontal: 10,
+    color: "white",
   },
   iconContainer: {
-    flex: 2,
+    flex: 1,
     alignContent: "center",
     alignItems: "center",
-    paddingTop: 10,
   },
-  weatherIcone: { width: 50, height: 50 },
+  weatherIcone: { width: 30, height: 30 },
 
   maxMinTemp: {
-    paddingHorizontal: 10,
-    paddingBottom: 20,
+    flex: 1,
     fontSize: 16,
+    color: "white",
   },
 });

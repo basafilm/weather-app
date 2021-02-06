@@ -48,12 +48,7 @@ export function HomeScreen({ navigation }: Props) {
       throw error;
     }
     setloading(false);
-  }, [city]);
-
-  // const handelDetails = useCallback(async () => {
-  //   navigation.navigate("Details"),
-  //     { country: courentCity?.sys?.country, city: courentCity?.name };
-  // }, []);
+  }, [city, lat, lon]);
 
   useEffect(() => {
     refreshLocation();

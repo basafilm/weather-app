@@ -29,13 +29,12 @@ export const WatherInfo = ({
   const navigation = useNavigation();
   const openDetails = useCallback(() => {
     navigation.navigate("Details", {
-      country: courentCity?.sys?.country,
-      city: courentCity?.name,
+      courentCity: courentCity,
     });
   }, []);
 
   const { name, sys = {}, main = {}, wind = {}, weather = [] } = courentCity;
-  const { sunrise, sunset }: any = sys;
+  const { sunrise }: any = sys;
   const { humidity, feels_like, temp, temp_max, temp_min }: any = main;
   const description: any = weather[0]?.description;
   const icon = weather[0]?.icon;
@@ -59,7 +58,9 @@ export const WatherInfo = ({
 
           <View style={styles.cityContainer}>
             <View style={styles.cityNameDate}>
-              <Text style={styles.cityName}>{name}</Text>
+              <Text numberOfLines={1} style={styles.cityName}>
+                {name}
+              </Text>
 
               {/* <View>
                 {description?.includes("clear sky") ? (
@@ -187,32 +188,26 @@ const styles = StyleSheet.create({
   },
   cityContainer: {
     flex: 3,
-    margin: "auto",
-    paddingRight: "5%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    padding: 20,
   },
-  cityNameDate: { flex: 2, width: "50%", height: "50%" },
+  cityNameDate: { flex: 3 },
   cityName: {
-    fontSize: 22,
+    fontSize: 32,
     color: "#ffffff",
     textAlign: "center",
   },
 
   weatherIconContainer: {
-    flex: 1,
-    width: "50%",
-    height: "50%",
+    flex: 2,
   },
   description: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
+    flex: 5,
     textAlign: "center",
     fontWeight: "bold",
     color: "#ffffff",
   },
-  weatherIcone: { maxWidth: "100%", height: "100%" },
+  weatherIcone: { width: 150, height: 150 },
   tempSunContainer: {
     flex: 1,
     flexDirection: "row",

@@ -34,9 +34,26 @@ export const WeeklyScreen = () => {
   const icon = weather[0]?.icon;
   const backgroundImage = require("../../assets/weather.png");
 
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const currentDate =
+    days[new Date(Date.now() + courentCity?.timezone * 1000).getDay()];
+
   return (
-    <SafeAreaView style={styles.weeklyMainContainer}>
-      <ImageBackground source={backgroundImage} style={styles.ImageBackground}>
+    <View style={styles.weeklyMainContainer}>
+      <ImageBackground
+        source={backgroundImage}
+        style={styles.ImageBackground}
+        blurRadius={7}
+      >
         <View style={styles.cityContainer}>
           <View style={styles.cityNameDate}>
             <Text style={styles.cityName}>{name}</Text>
@@ -55,19 +72,21 @@ export const WeeklyScreen = () => {
         <View style={styles.tempSunContainer}>
           <View style={styles.tempContainer}>
             <Text style={styles.temp}>{`${temp?.toFixed(0)}℃`}</Text>
+            <Text style={styles.today}>{currentDate} Today</Text>
           </View>
         </View>
+        <View style={styles.hourlyContainer}>
+          <HourlyWeather hourly={weeklyData?.hourly} />
+        </View>
       </ImageBackground>
-      <View style={styles.hourlyContainer}>
-        <HourlyWeather hourly={weeklyData?.hourly} />
-      </View>
+
       <View style={styles.DailyContainer}>
         <DailyWeather
           daily={weeklyData?.daily}
           timezone_offset={weeklyData?.timezone_offset}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -78,20 +97,21 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   ImageBackground: {
-    flex: 2,
+    flex: 1,
     maxWidth: "100%",
     margin: "auto",
+    paddingTop: 20,
   },
   cityContainer: {
-    flex: 1,
+    flex: 2,
     margin: "auto",
     paddingRight: "5%",
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  cityNameDate: { flex: 1, marginTop: "5%" },
+  cityNameDate: { flex: 1, marginTop: "10%" },
   cityName: {
-    fontSize: 22,
+    fontSize: 32,
     color: "#ffffff",
     textAlign: "center",
   },
@@ -113,8 +133,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "100%",
-    height: "100%",
   },
   tempContainer: {
     flex: 1,
@@ -125,12 +143,13 @@ const styles = StyleSheet.create({
     fontSize: 54,
     paddingLeft: "10%",
   },
+  today: {
+    fontWeight: "bold",
+    paddingLeft: 10,
+    color: "white",
+  },
   hourlyContainer: {
     flex: 1,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
-    borderTopColor: "gray",
-    borderTopWidth: 1,
   },
-  DailyContainer: { flex: 2 },
+  DailyContainer: { flex: 1 },
 });
