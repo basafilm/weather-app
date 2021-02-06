@@ -7,12 +7,10 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
-import { CourentDataTime } from "./CourentDateTime";
+import { CourentDateTime } from "./CourentDateTime";
 import { CustomizeButton } from "./CustomizeButton";
 import { AddCity } from "./AddCity";
 import { WeatherContext } from "./Context/WeatherContext";
-import moment from "moment";
 import { GeoLocation } from "./GeoLocation";
 
 interface WeatherPropsType {
@@ -43,9 +41,9 @@ export const WatherInfo = ({
   const icon = weather[0]?.icon;
   const { speed }: any = wind;
   const timezone = courentCity.timezone;
-  let sunRise = moment()
-    .utcOffset(sunrise / 21600)
-    .format("h:mm A");
+  let sunRise = new Date((sunrise + timezone) * 1000)
+    .toISOString()
+    .slice(11, 19);
 
   const backgroundImage = require("../../assets/weather.png");
 
@@ -90,7 +88,7 @@ export const WatherInfo = ({
                   />
                 ) : null}
               </View> */}
-              <CourentDataTime courentCity={courentCity} />
+              <CourentDateTime courentCity={courentCity} />
               <Text style={styles.description}>{description}</Text>
             </View>
             <GeoLocation setLatLon={setLatLon} latLon={latLon} />

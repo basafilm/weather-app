@@ -10,7 +10,7 @@ interface WeatherPropsType {
   courentCity: PropsType;
 }
 
-export const CourentDataTime = ({
+export const CourentDateTime = ({
   courentCity,
 }: WeatherPropsType): JSX.Element => {
   const timezone = courentCity.timezone;
