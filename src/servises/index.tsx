@@ -16,8 +16,7 @@ export async function getWeatherByCityName<T>(city: string): Promise<T> {
     throw new Error("You need to provide city");
   }
   const response = await fetch(`${url}q=${city}&APPID=${token}&units=metric`);
-  const result = await response.json();
-  return result;
+  return responseConf(response);
 }
 export async function getWeatherLatLong<T>(
   lat: number,
@@ -26,11 +25,10 @@ export async function getWeatherLatLong<T>(
   if (!lat && lon) {
     throw new Error("You need to provide city");
   }
-  const respons = await fetch(
+  const response = await fetch(
     `${url}lat=${lat}&lon=${lon}&exclude=hourly,daily&appid=${token}&units=metric`
   );
-  const result = await respons.json();
-  return result;
+  return responseConf(response);
 }
 export async function getWeatherByCityID<T>(id: number): Promise<T> {
   if (!id) {
@@ -61,7 +59,7 @@ export async function forecastFor7days<T>(
     throw new Error("You need to provide city");
   }
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}.441792&lon=${lon}&exclude=hourly,daily&appid=${token}`
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${token}&units=metric`
   );
   return responseConf(response);
 }

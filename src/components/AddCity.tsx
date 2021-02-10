@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 
@@ -13,15 +13,17 @@ export function AddCity({ setCity }: any) {
           placeholder={"Courent Location / City Name"}
           onChangeText={(value) => setAddCity(value)}
           clearTextOnFocus
-          textContentType="location"
         />
         <View style={styles.SearchClearButton}>
-          <TouchableOpacity
-            onPress={async () => {
-              setCity(addCity);
-            }}
-          >
-            <EvilIcons name="search" size={24} color="black" />
+          <TouchableOpacity>
+            <EvilIcons
+              name="search"
+              size={24}
+              color="black"
+              onPress={() => {
+                setCity(addCity), setAddCity("");
+              }}
+            />
           </TouchableOpacity>
         </View>
       </View>

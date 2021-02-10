@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  memo,
-  useContext,
-} from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -32,23 +26,22 @@ interface GeolocationData {
   longitude: number;
 }
 export function HomeScreen({ navigation }: Props) {
-  const { setCourentsity } = useContext(WeatherContext);
+  const { setCourentsity, city, setCity } = useContext(WeatherContext);
   const [latLon, setLatLon] = useState<GeolocationData>({
     latitude: 0,
     longitude: 0,
   });
   const lat: any = latLon.latitude.toFixed(4);
   const lon: any = latLon.longitude.toFixed(4);
-  const [city, setCity]: any = useState();
   const [loading, setloading] = useState(true);
   const refreshLocation = useCallback(async () => {
     try {
-      if (city) {
-        const getWeather = await getWeatherByCityName(city);
-        setCourentsity(getWeather);
-      } else {
+      if (!city) {
         const getByLatLon = await getWeatherLatLong(lat, lon);
         setCourentsity(getByLatLon);
+      } else {
+        const getWeather = await getWeatherByCityName(city);
+        setCourentsity(getWeather);
       }
     } catch (error) {
       throw error;
@@ -56,14 +49,9 @@ export function HomeScreen({ navigation }: Props) {
     setloading(false);
   }, [city]);
 
-  // const handelDetails = useCallback(async () => {
-  //   navigation.navigate("Details"),
-  //     { country: courentCity?.sys?.country, city: courentCity?.name };
-  // }, []);
-
   useEffect(() => {
     refreshLocation();
-  }, [city]);
+  }, [city, lat, lon]);
 
   const styles = StyleSheet.create({
     container: {

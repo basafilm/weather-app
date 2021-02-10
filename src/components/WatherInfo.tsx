@@ -1,5 +1,13 @@
 import React, { useCallback, useContext } from "react";
-import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Animated,
+  Easing,
+} from "react-native";
 import {
   MaterialCommunityIcons,
   Fontisto,
@@ -7,12 +15,10 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
-import { CourentDataTime } from "./CourentDateTime";
+import { CourentDateTime } from "./CourentDateTime";
 import { CustomizeButton } from "./CustomizeButton";
 import { AddCity } from "./AddCity";
 import { WeatherContext } from "./Context/WeatherContext";
-import moment from "moment";
 import { GeoLocation } from "./GeoLocation";
 
 interface WeatherPropsType {
@@ -31,23 +37,23 @@ export const WatherInfo = ({
   const navigation = useNavigation();
   const openDetails = useCallback(() => {
     navigation.navigate("Details", {
-      country: courentCity?.sys?.country,
-      city: courentCity?.name,
+      courentCity: courentCity,
     });
-  }, []);
+  }, [courentCity]);
 
   const { name, sys = {}, main = {}, wind = {}, weather = [] } = courentCity;
-  const { sunrise, sunset }: any = sys;
+  const { sunrise }: any = sys;
   const { humidity, feels_like, temp, temp_max, temp_min }: any = main;
-  const description: any = weather[0]?.description;
+  const description: any = weather[0]?.main;
   const icon = weather[0]?.icon;
   const { speed }: any = wind;
   const timezone = courentCity.timezone;
-  let sunRise = moment()
-    .utcOffset(sunrise / 21600)
-    .format("h:mm A");
+  let sunRise = new Date((sunrise + timezone) * 1000)
+    .toISOString()
+    .slice(11, 19);
 
   const backgroundImage = require("../../assets/weather.png");
+  const inicialValue = 0;
 
   return (
     <>
@@ -61,36 +67,11 @@ export const WatherInfo = ({
 
           <View style={styles.cityContainer}>
             <View style={styles.cityNameDate}>
-              <Text style={styles.cityName}>{name}</Text>
+              <Text numberOfLines={1} style={styles.cityName}>
+                {name}
+              </Text>
 
-              {/* <View>
-                {description?.includes("clear sky") ? (
-                  <MaterialCommunityIcons
-                    name="weather-cloudy"
-                    size={24}
-                    color="black"
-                  />
-                ) : description?.includes("snow") ? (
-                  <MaterialCommunityIcons
-                    name="weather-pouring"
-                    size={24}
-                    color="black"
-                  />
-                ) : description?.includes("Clouds") ? (
-                  <MaterialCommunityIcons
-                    name="weather-snowy"
-                    size={24}
-                    color="black"
-                  />
-                ) : description?.includes("sunny") ? (
-                  <MaterialCommunityIcons
-                    name="weather-sunny"
-                    size={24}
-                    color="black"
-                  />
-                ) : null}
-              </View> */}
-              <CourentDataTime courentCity={courentCity} />
+              <CourentDateTime courentCity={courentCity} />
               <Text style={styles.description}>{description}</Text>
             </View>
             <GeoLocation setLatLon={setLatLon} latLon={latLon} />
@@ -124,8 +105,8 @@ export const WatherInfo = ({
           <View style={styles.HumWindContainer}>
             <FontAwesome5 name="temperature-low" size={24} color="black" />
             <View>
-              <Text>{`feels_like`}</Text>
-              <Text>{`${feels_like?.toFixed(0)}℃`} </Text>
+              <Text> {`Feels_like`}</Text>
+              <Text> {`${feels_like?.toFixed(0)}℃`} </Text>
             </View>
           </View>
           <View style={styles.HumWindContainer}>
@@ -145,14 +126,14 @@ export const WatherInfo = ({
             />
             <View>
               <Text> {`Wind`}</Text>
-              <Text>{`${speed?.toFixed(0)}Km/h`}</Text>
+              <Text> {`${speed?.toFixed(0)}Km/h`}</Text>
             </View>
           </View>
           <View style={styles.HumWindContainer}>
             <Fontisto name="day-sunny" size={28} color="black" />
             <View>
               <Text> {`Sun Rise`}</Text>
-              <Text>{`${sunRise}`}</Text>
+              <Text> {`${sunRise}`}</Text>
             </View>
           </View>
         </View>
@@ -185,36 +166,30 @@ const styles = StyleSheet.create({
   ImageBackground: {
     flex: 6,
     maxWidth: "100%",
-    margin: "auto",
+    maxHeight: "100%",
   },
   cityContainer: {
     flex: 3,
-    margin: "auto",
-    paddingRight: "5%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    padding: 20,
   },
-  cityNameDate: { flex: 2, width: "50%", height: "50%" },
+  cityNameDate: { flex: 3 },
   cityName: {
-    fontSize: 22,
+    fontSize: 32,
     color: "#ffffff",
     textAlign: "center",
   },
 
   weatherIconContainer: {
-    flex: 1,
-    width: "50%",
-    height: "50%",
+    flex: 2,
   },
   description: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
+    flex: 5,
     textAlign: "center",
     fontWeight: "bold",
     color: "#ffffff",
   },
-  weatherIcone: { maxWidth: "100%", height: "100%" },
+  weatherIcone: { width: 150, height: 150 },
   tempSunContainer: {
     flex: 1,
     flexDirection: "row",

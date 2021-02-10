@@ -6,6 +6,7 @@ export const SplashScreen = () => {
       style={{
         flex: 1,
         alignContent: "center",
+        alignItems: "center",
         margin: "auto",
       }}
     >
