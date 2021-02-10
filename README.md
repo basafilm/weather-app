@@ -1,3 +1,4 @@
 # weather-app
 
-used react native for creating weather-app
+Used react native typescript for creating this weather-app
+Malek Shafi'i

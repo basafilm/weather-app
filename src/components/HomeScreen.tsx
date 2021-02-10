@@ -26,33 +26,32 @@ interface GeolocationData {
   longitude: number;
 }
 export function HomeScreen({ navigation }: Props) {
-  const { setCourentsity } = useContext(WeatherContext);
+  const { setCourentsity, city, setCity } = useContext(WeatherContext);
   const [latLon, setLatLon] = useState<GeolocationData>({
     latitude: 0,
     longitude: 0,
   });
   const lat: any = latLon.latitude.toFixed(4);
   const lon: any = latLon.longitude.toFixed(4);
-  const [city, setCity]: any = useState();
   const [loading, setloading] = useState(true);
   const refreshLocation = useCallback(async () => {
     try {
-      if (city) {
-        const getWeather = await getWeatherByCityName(city);
-        setCourentsity(getWeather);
-      } else {
+      if (!city) {
         const getByLatLon = await getWeatherLatLong(lat, lon);
         setCourentsity(getByLatLon);
+      } else {
+        const getWeather = await getWeatherByCityName(city);
+        setCourentsity(getWeather);
       }
     } catch (error) {
       throw error;
     }
     setloading(false);
-  }, [city, lat, lon]);
+  }, [city]);
 
   useEffect(() => {
     refreshLocation();
-  }, [city]);
+  }, [city, lat, lon]);
 
   const styles = StyleSheet.create({
     container: {

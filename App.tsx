@@ -5,16 +5,19 @@ import { WeatherContext } from "./src/components/Context/WeatherContext";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { StackNavigator } from "./src/components/Route/StackNavigator";
 import { ModelStackNavigator } from "./src/components/Route/ModelStackNavigator";
-import { DrawerNavigator } from "./src/components/Route/DrawerNavigator";
 
 const App = () => {
   const Tab = createBottomTabNavigator();
+
   const [courentCity, setCourentsity] = useState("");
+  const [city, setCity] = useState();
 
   return (
     <>
       <NavigationContainer>
-        <WeatherContext.Provider value={{ courentCity, setCourentsity }}>
+        <WeatherContext.Provider
+          value={{ courentCity, setCourentsity, city, setCity }}
+        >
           <Tab.Navigator>
             <Tab.Screen
               name="Home"

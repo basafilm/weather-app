@@ -1,5 +1,13 @@
 import React, { useCallback, useContext } from "react";
-import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Animated,
+  Easing,
+} from "react-native";
 import {
   MaterialCommunityIcons,
   Fontisto,
@@ -31,12 +39,12 @@ export const WatherInfo = ({
     navigation.navigate("Details", {
       courentCity: courentCity,
     });
-  }, []);
+  }, [courentCity]);
 
   const { name, sys = {}, main = {}, wind = {}, weather = [] } = courentCity;
   const { sunrise }: any = sys;
   const { humidity, feels_like, temp, temp_max, temp_min }: any = main;
-  const description: any = weather[0]?.description;
+  const description: any = weather[0]?.main;
   const icon = weather[0]?.icon;
   const { speed }: any = wind;
   const timezone = courentCity.timezone;
@@ -45,6 +53,7 @@ export const WatherInfo = ({
     .slice(11, 19);
 
   const backgroundImage = require("../../assets/weather.png");
+  const inicialValue = 0;
 
   return (
     <>
@@ -62,33 +71,6 @@ export const WatherInfo = ({
                 {name}
               </Text>
 
-              {/* <View>
-                {description?.includes("clear sky") ? (
-                  <MaterialCommunityIcons
-                    name="weather-cloudy"
-                    size={24}
-                    color="black"
-                  />
-                ) : description?.includes("snow") ? (
-                  <MaterialCommunityIcons
-                    name="weather-pouring"
-                    size={24}
-                    color="black"
-                  />
-                ) : description?.includes("Clouds") ? (
-                  <MaterialCommunityIcons
-                    name="weather-snowy"
-                    size={24}
-                    color="black"
-                  />
-                ) : description?.includes("sunny") ? (
-                  <MaterialCommunityIcons
-                    name="weather-sunny"
-                    size={24}
-                    color="black"
-                  />
-                ) : null}
-              </View> */}
               <CourentDateTime courentCity={courentCity} />
               <Text style={styles.description}>{description}</Text>
             </View>
@@ -123,8 +105,8 @@ export const WatherInfo = ({
           <View style={styles.HumWindContainer}>
             <FontAwesome5 name="temperature-low" size={24} color="black" />
             <View>
-              <Text>{`feels_like`}</Text>
-              <Text>{`${feels_like?.toFixed(0)}℃`} </Text>
+              <Text> {`Feels_like`}</Text>
+              <Text> {`${feels_like?.toFixed(0)}℃`} </Text>
             </View>
           </View>
           <View style={styles.HumWindContainer}>
@@ -144,14 +126,14 @@ export const WatherInfo = ({
             />
             <View>
               <Text> {`Wind`}</Text>
-              <Text>{`${speed?.toFixed(0)}Km/h`}</Text>
+              <Text> {`${speed?.toFixed(0)}Km/h`}</Text>
             </View>
           </View>
           <View style={styles.HumWindContainer}>
             <Fontisto name="day-sunny" size={28} color="black" />
             <View>
               <Text> {`Sun Rise`}</Text>
-              <Text>{`${sunRise}`}</Text>
+              <Text> {`${sunRise}`}</Text>
             </View>
           </View>
         </View>
@@ -184,7 +166,7 @@ const styles = StyleSheet.create({
   ImageBackground: {
     flex: 6,
     maxWidth: "100%",
-    margin: "auto",
+    maxHeight: "100%",
   },
   cityContainer: {
     flex: 3,

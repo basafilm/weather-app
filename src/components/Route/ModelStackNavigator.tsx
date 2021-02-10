@@ -5,7 +5,7 @@ import { WeeklyScreen } from "../WeeklyScreen";
 export const ModelStackNavigator = () => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator mode={"modal"} screenOptions={{ headerShown: false }}>
       <Stack.Screen name="WeeklyScreen" component={WeeklyScreen} />
     </Stack.Navigator>
   );
