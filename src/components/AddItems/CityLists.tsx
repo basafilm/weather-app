@@ -5,7 +5,7 @@ import { AddCity } from "./AddCity";
 import { WeatherContext } from "../Context/WeatherContext";
 import { useNavigation } from "@react-navigation/native";
 
-export function CityLists() {
+export function CityLists(): JSX.Element {
   const { setCity } = useContext(WeatherContext);
   const [items, setItesm] = useState([
     {
@@ -31,19 +31,21 @@ export function CityLists() {
         style={styles.flatlistContainer}
         data={items}
         renderItem={({ item }) => {
-          return (
-            <View style={styles.flatChild}>
-              <TouchableOpacity
-                style={styles.flatTouch}
-                onPress={() => handelSubmitCity(item.city)}
-              >
-                <Text style={{ textAlign: "left" }}>{item.city}</Text>
-              </TouchableOpacity>
-              <View style={styles.flatButton}>
-                <Button onPress={() => deletHandler(item.key)} title="+" />
+          if (item.city.length > 1) {
+            return (
+              <View style={styles.flatChild}>
+                <TouchableOpacity
+                  style={styles.flatTouch}
+                  onPress={() => handelSubmitCity(item.city)}
+                >
+                  <Text style={{ textAlign: "left" }}>{item.city}</Text>
+                </TouchableOpacity>
+                <View style={styles.flatButton}>
+                  <Button onPress={() => deletHandler(item.key)} title="+" />
+                </View>
               </View>
-            </View>
-          );
+            );
+          }
         }}
         keyExtractor={(item) => item.key.toString()}
       />

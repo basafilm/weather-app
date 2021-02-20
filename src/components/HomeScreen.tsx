@@ -14,7 +14,7 @@ import {
   NavigationState,
 } from "react-navigation";
 import { WatherInfo } from "./WatherInfo";
-import { SplashScreen } from "./SplashScreen";
+import { Loader } from "./Loader/Loader";
 import { WeatherContext } from "./Context/WeatherContext";
 
 interface Props {
@@ -60,7 +60,7 @@ export function HomeScreen({ navigation }: Props) {
     },
   });
   if (loading) {
-    return <SplashScreen />;
+    return <Loader />;
   } else {
     return (
       <TouchableWithoutFeedback

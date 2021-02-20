@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  SafeAreaView,
-} from "react-native";
+import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import { forecastFor7days } from "../servises/index";
 import { WeatherContext } from "./Context/WeatherContext";
 import { DailyWeather } from "./DailyWeather";
@@ -17,7 +10,6 @@ export const WeeklyScreen = () => {
   const [weeklyData, setWeeklyData]: any = useState();
   const lat = courentCity?.coord?.lat;
   const lon = courentCity?.coord?.lon;
-
   useEffect(() => {
     (async () => {
       try {
