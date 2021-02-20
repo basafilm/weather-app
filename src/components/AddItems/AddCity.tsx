@@ -1,42 +1,39 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 
 export function AddCity({ setItesm }: any) {
   const [textInput, setTextInput]: any = useState([]);
-  const handelText = (city: string) => {
-    if (city) {
-      setTextInput(city);
+  const handelSubmit = (textInput: any) => {
+    if (textInput.length > 1) {
+      setItesm((prev: any) => {
+        return [
+          {
+            key: Math.random(),
+            city: textInput,
+          },
+          ...prev,
+        ];
+      });
     }
-  };
-
-  const handelSubmit = (textInput: string) => {
-    setItesm((prev: any) => {
-      return [
-        {
-          key: Math.random(),
-          city: textInput,
-        },
-        ...prev,
-      ];
-    });
   };
   return (
     <View style={styles.textInputContainer}>
       <TextInput
         style={styles.textInput}
-        placeholder="City Name"
-        onChangeText={handelText}
-        clearButtonMode="always"
+        placeholder="Save City Name"
+        onChangeText={(city) => setTextInput(city)}
+        value={`${textInput}`}
       />
       <View style={styles.buttonInput}>
         <TouchableOpacity>
-          <Ionicons
-            name="add-circle-outline"
+          <EvilIcons
+            name="search"
             size={24}
             color="black"
             onPress={() => {
               handelSubmit(textInput);
+              setTextInput("");
             }}
           />
         </TouchableOpacity>

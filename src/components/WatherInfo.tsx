@@ -1,13 +1,5 @@
-import React, { useCallback, useContext } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  Animated,
-  Easing,
-} from "react-native";
+import React, { useCallback, useContext, useMemo } from "react";
+import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import {
   MaterialCommunityIcons,
   Fontisto,

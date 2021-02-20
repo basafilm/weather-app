@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 
@@ -12,6 +12,7 @@ export function AddCity({ setCity }: any) {
           style={styles.textInput}
           placeholder={"Courent Location / City Name"}
           onChangeText={(value) => setAddCity(value)}
+          value={`${addCity}`}
           clearTextOnFocus
         />
         <View style={styles.SearchClearButton}>

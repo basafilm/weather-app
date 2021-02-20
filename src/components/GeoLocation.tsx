@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Platform, Text, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
@@ -6,7 +6,7 @@ import * as Location from "expo-location";
 export function GeoLocation({ setLatLon, latLon }: any) {
   const [errorMsg, setErrorMsg]: any = useState(null);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
+  useCallback(() => {
     if (Platform.OS === "android" && !Constants.isDevice) {
       setErrorMsg(
         "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
