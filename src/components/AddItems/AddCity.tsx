@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
+import { WeatherContext } from "../Context/WeatherContext";
 
 export function AddCity({ setItesm }: any) {
-  const [textInput, setTextInput]: any = useState([]);
+  const { city, setCity } = useContext(WeatherContext);
+  // const [textInput, setTextInput]: any = useState(city);
+
   const handelSubmit = (textInput: any) => {
     if (textInput.length > 1) {
       setItesm((prev: any) => {
         return [
           {
             key: Math.random(),
-            city: textInput,
+            city: city,
           },
           ...prev,
         ];
@@ -22,8 +25,8 @@ export function AddCity({ setItesm }: any) {
       <TextInput
         style={styles.textInput}
         placeholder="Save City Name"
-        onChangeText={(city) => setTextInput(city)}
-        value={`${textInput}`}
+        onChangeText={(city) => setCity(city)}
+        value={city}
       />
       <View style={styles.buttonInput}>
         <TouchableOpacity>
@@ -32,8 +35,8 @@ export function AddCity({ setItesm }: any) {
             size={24}
             color="black"
             onPress={() => {
-              handelSubmit(textInput);
-              setTextInput("");
+              handelSubmit(city);
+              setCity("");
             }}
           />
         </TouchableOpacity>

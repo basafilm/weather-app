@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, TextInput } from "react-native";
 import Animated, {
   Easing,
-  interpolate,
+  interpolateNode,
   multiply,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,7 +20,7 @@ export function Loader({ duration = 20 * 100000, toValue = 100 }: any) {
   const radius = (size - strokeWidth) / 2;
   const cercumference = radius * 2 * Math.PI;
 
-  const alpha = interpolate(moveCircle, {
+  const alpha = interpolateNode(moveCircle, {
     inputRange: [0, 1],
     outputRange: [0, cercumference],
   });

@@ -1,67 +1,46 @@
 import React, { useState, useCallback } from "react";
 import { Platform, Text, View, StyleSheet } from "react-native";
-import Constants from "expo-constants";
+import * as Device from "expo-device";
 import * as Location from "expo-location";
 
-export function GeoLocation({ setLatLon, latLon }: any) {
-  const [errorMsg, setErrorMsg]: any = useState(null);
-  const [loading, setLoading] = useState(true);
-  useCallback(() => {
-    if (Platform.OS === "android" && !Constants.isDevice) {
+export function GeoLocation({ setCity, setLoading, setErrorMsg }: any) {
+  (async () => {
+    if (Platform.OS === "android" && !Device.isDevice) {
       setErrorMsg(
         "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       );
     } else {
-      (async () => {
-        let { status } = await Location.requestPermissionsAsync();
-        if (status !== "granted") {
-          setErrorMsg(
-            "Permission to access location was denied / enter the city name"
-          );
-        }
-        const options: any = {
-          enableHighAccuracy: true,
-          maximumAge: 5000,
-          timeout: 1000,
-        };
-        let courentLocation = await Location.getCurrentPositionAsync(options);
-
-        setLatLon({
-          latitude: courentLocation.coords.latitude,
-          longitude: courentLocation.coords.longitude,
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg(
+          "Permission to access location was denied / enter the city name"
+        );
+      }
+      const options: any = {
+        enableHighAccuracy: true,
+        maximumAge: 5000,
+        timeout: 1000,
+      };
+      const { coords } = await Location.getCurrentPositionAsync(options);
+      if (coords) {
+        let { longitude, latitude } = coords;
+        const regionName = await Location.reverseGeocodeAsync({
+          longitude,
+          latitude,
         });
-      })();
+        const convert = (array: any) =>
+          Object.fromEntries(
+            array.map((item: any, index: number) => [item[index], item])
+          );
+        const address = convert(regionName).undefined;
+        setCity(address?.city);
+        // setCity({
+        //   latitude: coords.latitude,
+        //   longitude: coords.longitude,
+        //   address: address?.city,
+        // });
+        setLoading(false);
+      }
     }
-    return () => setLoading(false);
-  }, [latLon.latitude]);
-  let text: any = "Waiting..";
-
-  if (loading) {
-    text = "Loading ...!";
-  }
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (latLon) {
-    text = null;
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>{text}</Text>
-    </View>
-  );
+  })();
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: Constants.statusBarHeight,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 12,
-    textAlign: "center",
-  },
-});

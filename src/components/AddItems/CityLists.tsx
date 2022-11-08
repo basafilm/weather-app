@@ -31,21 +31,23 @@ export function CityLists(): JSX.Element {
         style={styles.flatlistContainer}
         data={items}
         renderItem={({ item }) => {
-          if (item.city.length > 1) {
             return (
               <View style={styles.flatChild}>
+                {item.city.length > 1 &&
+                  <>
                 <TouchableOpacity
-                  style={styles.flatTouch}
-                  onPress={() => handelSubmitCity(item.city)}
-                >
-                  <Text style={{ textAlign: "left" }}>{item.city}</Text>
-                </TouchableOpacity>
-                <View style={styles.flatButton}>
-                  <Button onPress={() => deletHandler(item.key)} title="+" />
-                </View>
+                style={styles.flatTouch}
+                onPress={() => handelSubmitCity(item.city)}
+              >
+                <Text style={{ textAlign: "left" }}>{item.city}</Text>
+              </TouchableOpacity>
+              <View style={styles.flatButton}>
+                <Button onPress={() => deletHandler(item.key)} title="+" />
+                  </View>
+              </>
+              }
               </View>
             );
-          }
         }}
         keyExtractor={(item) => item.key.toString()}
       />

@@ -11,7 +11,6 @@ import { CourentDateTime } from "./CourentDateTime";
 import { CustomizeButton } from "./CustomizeButton";
 import { AddCity } from "./AddCity";
 import { WeatherContext } from "./Context/WeatherContext";
-import { GeoLocation } from "./GeoLocation";
 
 interface WeatherPropsType {
   city: any;
@@ -62,12 +61,9 @@ export const WatherInfo = ({
               <Text numberOfLines={1} style={styles.cityName}>
                 {name}
               </Text>
-
               <CourentDateTime courentCity={courentCity} />
               <Text style={styles.description}>{description}</Text>
             </View>
-            <GeoLocation setLatLon={setLatLon} latLon={latLon} />
-
             <View style={styles.weatherIconContainer}>
               <Image
                 style={styles.weatherIcone}

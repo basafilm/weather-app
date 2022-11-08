@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { WeatherContext } from "./src/components/Context/WeatherContext";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { StackNavigator } from "./src/components/Route/StackNavigator";
 import { ModelStackNavigator } from "./src/components/Route/ModelStackNavigator";
+import { GeoLocation } from "./src/components/GeoLocation";
 
 const App = () => {
   const Tab = createBottomTabNavigator();
 
   const [courentCity, setCourentsity] = useState("");
   const [city, setCity] = useState();
+  const [errorMessage, setErrorMsg] = useState();
+  const [loading, setLoading] = useState();
+  useEffect(() => {
+    (async () => GeoLocation({ setCity, setErrorMsg, setLoading }))();
+  }, []);
 
   return (
     <>
