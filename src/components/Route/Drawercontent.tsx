@@ -19,7 +19,7 @@ export const Drawercontent: any = ({ navigation }: any): JSX.Element => {
               )}
               label="About"
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate("About");
               }}
             />
           </View>
@@ -32,7 +32,7 @@ export const Drawercontent: any = ({ navigation }: any): JSX.Element => {
           )}
           label="back"
           onPress={() => {
-            navigation.goBack();
+            navigation.navigate("Home");
           }}
         />
       </View>

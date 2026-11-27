@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -30,3 +28,7 @@
     }
   }
 }
+
+// "extra": {
+//   "URL": "https://api.openweathermap.org/data/2.5/weather?"
+// },

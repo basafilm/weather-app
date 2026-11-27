@@ -1,6 +1,13 @@
-const token = "772fedbd6e67d600702779d68d5c7f91";
-const url = "https://api.openweathermap.org/data/2.5/weather?";
+import { API_URL, API_TOKEN } from "@env";
 
+fetch(`${API_URL}/users`, {
+  headers: {
+    Authorization: `Bearer ${API_TOKEN}`,
+  },
+});
+
+const token = API_TOKEN;
+const url = API_URL;
 async function responseConf<T>(response: any): Promise<T> {
   if (!response.ok) {
     const message = `An error has ocurred: ${response.status}`;

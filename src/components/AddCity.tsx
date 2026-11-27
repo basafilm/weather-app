@@ -1,8 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
+import { WeatherContext } from "./Context/WeatherContext";
 
 export function AddCity({ setCity }: any) {
+  const { city } = useContext(WeatherContext);
   const [addCity, setAddCity]: any = useState();
 
   return (
@@ -12,6 +14,7 @@ export function AddCity({ setCity }: any) {
           style={styles.textInput}
           placeholder={"Courent Location / City Name"}
           onChangeText={(value) => setAddCity(value)}
+          value={addCity === undefined ? city : addCity}
           clearTextOnFocus
         />
         <View style={styles.SearchClearButton}>
